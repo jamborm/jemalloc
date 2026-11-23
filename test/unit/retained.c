@@ -152,7 +152,7 @@ TEST_BEGIN(test_retained) {
 
 		arena_t *arena = arena_get(tsdn_fetch(), arena_ind, false);
 		size_t   usable = 0;
-		for (pszind_t pind = sz_psz2ind(HUGEPAGE);
+		for (pszind_t pind = sz_psz2ind(EXP_GROW_MIN_SIZE);
 		     pind < arena->pa_shard.pac.exp_grow.next; pind++) {
 			size_t psz = sz_pind2sz(pind);
 			size_t psz_fragmented = psz % esz;

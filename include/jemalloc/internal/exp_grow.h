@@ -3,6 +3,15 @@
 
 #include "jemalloc/internal/jemalloc_preamble.h"
 #include "jemalloc/internal/sz.h"
+
+/*
+ * Minimal size of the first grow in the series.  Enforce a minimal of 2M grow,
+ * which is convenient for the huge page use cases.  Avoid using HUGEPAGE as the
+ * value though, because on some platforms it can be very large (e.g. 512M on
+ * aarch64 w/ 64K pages) or smaller (e.g. 1M on s390x).
+ */
+#define EXP_GROW_MIN_SIZE ((size_t)2 << 20)
+
 typedef struct exp_grow_s exp_grow_t;
 struct exp_grow_s {
 	/*
